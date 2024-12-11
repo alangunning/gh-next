@@ -4,7 +4,10 @@ import { drizzle } from "drizzle-orm/postgres-js";
 import postgres from "postgres";
 import { eq } from "drizzle-orm";
 
-const db = drizzle(postgres(process.env.DATABASE_URL!));
+
+
+async function fetchUsers() {
+  const db = drizzle(postgres(process.env.DATABASE_URL!));
 
 const dbUsers = await db.select().from(users);
 
@@ -30,7 +33,8 @@ for (const user of dbUsers) {
     {
       login: user.username
     }
-  ).catch((error) => null);
+  )
+  //.catch((error) => null);
 
   if (userFromGithub) {
     await db
@@ -41,5 +45,14 @@ for (const user of dbUsers) {
     console.dir(userFromGithub.user, { depth: null });
   }
 }
+
+  console.log(users);
+}
+
+fetchUsers().catch((err) => {
+  console.error(err);
+  process.exit(1);
+});
+
 
 process.exit();

@@ -88,6 +88,12 @@ Expect stuff to break.
    docker-compose up -d --remove-orphans
    ```
 
+   Depending on your setup it may be:
+
+   ```bash
+   docker compose up -d --remove-orphans
+   ```
+
 3. **Install the dependencies :**
 
    ```bash
@@ -96,7 +102,28 @@ Expect stuff to break.
 
 4. Rename `.env.example` to `.env.local` And change the file to your needs,
 
-5. **And launch the project :**
+    - To obtain `GITHUB_CLIENT_ID` & `GITHUB_SECRET`
+    
+      - Create a new Github App here: https://github.com/settings/apps
+
+    - To obtain `GITHUB_PERSONAL_ACCESS_TOKEN` 
+    
+      - Create a Peronal Access Token here: https://github.com/settings/tokens?type=beta
+
+5. Migrate Schema (Initial Setup Only):
+  
+    Should have automatically applied schema on startup
+    ```bash
+    pnpm run db:migrate-docker
+    ```
+
+    Populate data
+    ```bash
+    pnpm run db:fetch-users
+    pnpm run db:fetch-issues
+    ```
+
+6. **And launch the project :**
 
    ```bash
    pnpm run dev
